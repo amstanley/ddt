@@ -1,0 +1,155 @@
+<head>
+  <title>ddt</title>
+</head>
+
+<template name="layout" >
+  <h1>Customer Service Session Visibility Tool</h1>
+
+  {{> loginButtons}}
+
+  {{#if currentUser}} 
+    {{> yield}}
+  {{/if}}
+  
+  
+</template>
+
+
+ <!-- a template that renders multiple posts -->
+<template name="activityList">
+  
+    <div class="navbar-header">
+    Path: {{pathFor 'activityList' }}
+   </div>
+    
+    <table>
+      <tr>
+       <td> Session_id </td> 
+       <td> HHID </td> 
+       <td> Raw Timestamp</td> 
+      </tr>
+      
+        
+    {{#each remoteData}}
+      <tr>
+        <td><a href="/{{session_id}}" id="selectHHID" >{{session_id}}</a></td>
+        <td>{{household_id}} </td>
+        <td>{{time}} </td>
+      </tr>
+    {{/each}}
+  </table>
+</template>
+  
+  <template name="loading">
+  {{>spinner}}
+</template>
+
+<template name="sessionPage">
+  
+    <div class="navbar-header">
+    <p>Path: /{{current_session_id}}</p>
+
+  </div>
+  
+<table style="width:100%">
+  <tr>
+    <td style="width=48%">
+  WiFi Levels in dbmW:
+    <div> 
+    <canvas id="lvlChart" width="500" height="200"> </canvas>
+    
+    <div id="lvl_legend">{{{chartLegend}}}</div>
+   </div>
+  </td>  
+ 
+   <td style="width=48%">
+   WiFi Packet Loss in %:
+   <div>
+    <canvas id="wifipacketlossChart" width="500" height="200"> </canvas>
+    
+    <div id="wifipacketloss_legend">{{{wifipacketlosschartLegend}}}</div>
+   </div>  
+   </td>
+ 
+  </tr>
+  <tr>
+ 
+  <td style="width=48%">  
+   WiFi Link Bitrate in Mb/s:
+  <div>
+    <canvas id="mbitrateChart" width="500" height="200"> </canvas>
+    
+    <div id="mbitrate_legend">{{{mbitratechartLegend}}}</div>
+   </div> 
+ 
+  </td>
+   <td style="width=48%">
+    Customer Gateway Ping Time in ms:
+   <div>
+    <canvas id="gatewaypingtimeChart" width="500" height="200"> </canvas>
+    
+    <div id="gatewaypingtime_legend">{{{gatewaypingtimechartLegend}}}</div>
+   </div>  
+ 
+   </td> 
+ 
+  </tr> 
+</table>  
+    
+  Raw Data
+  <div>
+    
+  <table style="width:100%">  
+    <tr>
+      <td> household_id</td>
+      <td> time </td>
+      <td> session_id </td>
+      <td> Wifi Level: Min <br> -256 for dbmW</td>
+      <td> Wifi Level: Max <br> -256 for dbmW</td>
+      <td> Wifi Level: Avg <br> -256 for dbmW</td>
+      <td> Wifi Level: Median <br> -256 for dbmW</td>
+      <td> mbitrate: Min </td>
+      <td> mbitrate: Max </td>
+      <td> mbitrate: Avg </td>
+      <td> mbitrate: Median </td>
+      <td>long_min</td>
+      <td>long_max</td>
+      <td>long_avg</td>
+      <td>long_median</td>
+      <td>long_loss</td>
+      <td>short_min</td>
+      <td>short_max</td>
+      <td>short_avg</td>
+      <td>short_median</td>
+      <td>short_loss</td>
+    </tr>
+    
+    {{#each this}} 
+    <tr>
+      <td>{{household_id}} </td>
+      <td>{{time}} </td>
+      <td>{{session_id}}</td>
+      <td>{{lvl_min}} </td>
+      <td>{{lvl_max}} </td>
+      <td>{{lvl_avg}} </td>
+      <td>{{lvl_median}} </td>
+      <td>{{mbitrate_min}} </td>
+      <td>{{mbitrate_max}} </td>
+      <td>{{mbitrate_avg}} </td>
+      <td>{{mbitrate_median}} </td>
+      <td>{{long_min}}</td>
+      <td>{{long_max}}</td>
+      <td>{{long_avg}}</td>
+      <td>{{long_median}}</td>
+      <td>{{long_loss}}</td>
+      <td>{{short_min}}</td>
+      <td>{{short_max}}</td>
+      <td>{{short_avg}}</td>
+      <td>{{short_median}}</td>
+      <td>{{short_loss}}</td>
+     </tr>
+    {{/each}}
+  </table>
+  
+  </div>
+</template>
